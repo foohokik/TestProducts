@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">TestProducts</string>
+    <string name="placeholder">Enter symbol</string>
+    <string name="category_property">Category</string>
+    <string name="description_property">Description</string>
+    <string name="price_property">Price</string>
+</resources>
