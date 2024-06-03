@@ -11,28 +11,23 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
 @HiltWorker
 class Worker @AssistedInject constructor (
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val productInteractor: ProductInteractor,
     @Assisted private val context: Context,
     @Assisted private val params: WorkerParameters
 ): CoroutineWorker(context, params) {
 
-
     override suspend fun doWork(): Result {
-       return withContext(ioDispatcher) {
-            Log.d("Worker555", "doWork")
-          return@withContext  try {
+          return  try {
                 productInteractor.getAllData()
-                Log.d("Worker555", "all data    " + productInteractor.getAllData())
                 Result.success()
             } catch (throwable: Throwable) {
                 Result.failure()
             }
-        }
     }
 
 }

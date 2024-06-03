@@ -117,6 +117,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.48")
     implementation ("androidx.hilt:hilt-work:1.2.0")
 
+
     //android
     implementation ("androidx.fragment:fragment-ktx:1.7.0")
 

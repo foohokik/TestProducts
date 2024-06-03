@@ -7,7 +7,6 @@ import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.testproducts.worker.Worker
@@ -21,8 +20,6 @@ class App: Application(), Configuration.Provider  {
     @Inject
     lateinit var workerFactory: HiltWorkerFactory
 
-
-
     override val workManagerConfiguration: Configuration
         get() = Configuration.Builder()
             .setMinimumLoggingLevel(Log.DEBUG)
@@ -31,27 +28,22 @@ class App: Application(), Configuration.Provider  {
 
     override fun onCreate() {
         super.onCreate()
-        oneWork()
+        work()
     }
+
 
 
     private val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .setRequiresBatteryNotLow(true)
-//        .setRequiresDeviceIdle(true)
+        .setRequiresDeviceIdle(true)
         .build()
 
-    private val repeatingRequest = PeriodicWorkRequestBuilder<Worker>(15,  TimeUnit.MINUTES)
+    private val repeatingRequest = PeriodicWorkRequestBuilder<Worker>(24,  TimeUnit.HOURS)
         .setConstraints(constraints)
         .addTag(WORK_MANAGER_DOWNLOAD_TAG)
         .build()
 
-
-
-    fun oneWork() {
-        val request = OneTimeWorkRequestBuilder<Worker>().setConstraints(constraints).build()
-        WorkManager.getInstance(this).enqueue(request)
-    }
    private fun work() {
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             WORK_MANAGER_DOWNLOAD_TAG,
@@ -59,7 +51,6 @@ class App: Application(), Configuration.Provider  {
             repeatingRequest
         )
     }
-
 
     companion object {
         const val WORK_MANAGER_DOWNLOAD_TAG = "WORK_MANAGER_DOWNLOAD_TAG"
