@@ -1,6 +1,6 @@
 package com.example.testproducts.presentation.products
 
-import android.util.Log
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -26,6 +25,7 @@ import androidx.compose.material.icons.sharp.Search
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -51,8 +51,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.testproducts.R
-import com.example.testproducts.presentation.products.data.ListState
 import com.example.testproducts.domain.model.ProductUI
+import com.example.testproducts.presentation.products.data.ListState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -175,7 +175,6 @@ fun ProductsItems(
                 }
 
                 else -> {
-                    Log.i("myTag", "loading " + content.toString() + "  title " + content.title)
                     Column(
                         modifier = Modifier
                             .padding(vertical = 20.dp)

@@ -43,24 +43,45 @@ class ProductInteractor
 
 
         remoteProducts.onSuccess { result ->
-                localProductsRepository.saveData(result.products.filterIsInstance<ProductUI.Product>())
-                mutableStateFlow.update { state ->
-                    val product =
-                        state.product.copy(products = (state.product.products + result.products).filterIsInstance<ProductUI.Product>())
-                    state.copy(
-                        product = product, isLoading = false
-                    )
-                }
-                if (skip < result.total) {
-                    skip += LIMIT
-                }
-            }.onError { _, message ->
-                getLocalDataOrError(message.orEmpty())
-            }.onException { throwable ->
-                getLocalDataOrError(throwable.message.orEmpty())
+            localProductsRepository.saveData(result.products.filterIsInstance<ProductUI.Product>())
+            mutableStateFlow.update { state ->
+                val product =
+                    state.product.copy(products = (state.product.products + result.products).filterIsInstance<ProductUI.Product>())
+                state.copy(
+                    product = product, isLoading = false
+                )
             }
+            if (skip < result.total) {
+                skip += LIMIT
+            }
+        }.onError { _, message ->
+            getLocalDataOrError(message.orEmpty())
+        }.onException { throwable ->
+            getLocalDataOrError(throwable.message.orEmpty())
+        }
         mutableStateFlow.update { state ->
             state.copy(listState = ListState.IDLE)
+        }
+    }
+
+    suspend fun getAllData() {
+        val remoteProducts = remoteProductsRepository.getProducts(0, 0)
+        remoteProducts.onSuccess { result ->
+            localProductsRepository.saveData(result.products.filterIsInstance<ProductUI.Product>())
+//            mutableStateFlow.update { state ->
+//                val product =
+//                    state.product.copy(
+//                        products = (state.product.products + result.products)
+//                            .filterIsInstance<ProductUI.Product>()
+//                    )
+//                state.copy(
+//                    product = product, isLoading = false
+//                )
+//            }
+        }.onError { _, message ->
+            getLocalDataOrError(message.orEmpty())
+        }.onException { throwable ->
+            getLocalDataOrError(throwable.message.orEmpty())
         }
     }
 

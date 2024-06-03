@@ -115,6 +115,7 @@ dependencies {
     //hilt
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation ("androidx.hilt:hilt-work:1.2.0")
 
     //android
     implementation ("androidx.fragment:fragment-ktx:1.7.0")
@@ -132,6 +133,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.room:room-runtime:$room_version")
+
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
 
     //navigation
     implementation(libs.navigation)
