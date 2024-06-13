@@ -1,6 +1,7 @@
 package com.example.testproducts.di
 
 import com.example.testproducts.data.api.ProductsAPI
+import com.example.testproducts.data.db.AppDatabase
 import com.example.testproducts.data.db.ProductDao
 import com.example.testproducts.data.repository.LocalProductsRepositoryImpl
 import com.example.testproducts.data.repository.RemoteProductsRepoImpl
@@ -16,14 +17,32 @@ import javax.inject.Singleton
 
 
 
+//@Module
+//@InstallIn(ActivityRetainedComponent::class)
+//interface RepoModule {
+//
+//  @Binds
+//  fun bindRemoteRepository(repository: RemoteProductsRepoImpl): RemoteProductsRepository
+//
+//  @Binds
+//  fun bindLocalRepository(repository: LocalProductsRepositoryImpl): LocalProductsRepository
+//
+//}
+
 @Module
-@InstallIn(ActivityRetainedComponent::class)
-interface RepoModule {
+@InstallIn(SingletonComponent::class)
+object RepoModule{
 
-  @Binds
-  fun bindRemoteRepository(repository: RemoteProductsRepoImpl): RemoteProductsRepository
+  @Singleton
+  @Provides
+  fun provideRemoteRepo (api: ProductsAPI): RemoteProductsRepository {
+    return RemoteProductsRepoImpl(api)
+  }
 
-  @Binds
-  fun bindLocalRepository(repository: LocalProductsRepositoryImpl): LocalProductsRepository
+  @Singleton
+  @Provides
+  fun provideLocalRepo (db: ProductDao): LocalProductsRepository {
+    return LocalProductsRepositoryImpl(db)
+  }
 
 }

@@ -7,20 +7,22 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityRetainedComponent::class)
+@InstallIn(SingletonComponent::class)
 object ProductsFlowModule {
 
-    @ActivityRetainedScoped
+    @Singleton
     @Provides
     fun provideMutableEffectChannel(): Channel<SideEffects> {
         return Channel()
     }
 
-    @ActivityRetainedScoped
+    @Singleton
     @Provides
     fun provideMutableScreenStateFlow(): MutableStateFlow<ProductsScreenState> {
         return MutableStateFlow(ProductsScreenState())

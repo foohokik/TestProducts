@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.example.testproducts.data.api.ProductsAPI
 import com.example.testproducts.di.IoDispatcher
 import com.example.testproducts.domain.interactor.ProductInteractor
 import dagger.assisted.Assisted
@@ -22,8 +23,10 @@ class Worker @AssistedInject constructor (
 ): CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
+        Log.d("WRK", "doWork")
           return  try {
                 productInteractor.getAllData()
+              Log.d("WRK", "get  ")
                 Result.success()
             } catch (throwable: Throwable) {
                 Result.failure()

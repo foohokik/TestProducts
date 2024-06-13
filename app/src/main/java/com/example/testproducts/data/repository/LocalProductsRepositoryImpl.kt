@@ -1,5 +1,6 @@
 package com.example.testproducts.data.repository
 
+import android.util.Log
 import com.example.testproducts.data.db.ProductDao
 import com.example.testproducts.data.db.toProductEntities
 import com.example.testproducts.data.db.toProducts
@@ -15,6 +16,7 @@ class LocalProductsRepositoryImpl @Inject constructor(private val dao: ProductDa
     }
 
     override suspend fun saveData(items: List<ProductUI.Product>) {
+        Log.d("WRK", "items in LocalProductsRepositoryImpl = $items")
         dao.insertAll(items.toProductEntities())
     }
 

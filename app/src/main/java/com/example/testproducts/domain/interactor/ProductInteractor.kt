@@ -19,9 +19,10 @@ class ProductInteractor
     private val mutableStateFlow: MutableStateFlow<ProductsScreenState>
 ) {
     private var skip = 0
-
     suspend fun getProducts(isRefresh: Boolean = false) {
-        if (mutableStateFlow.value.product.products.isNotEmpty() && mutableStateFlow.value.product.products.size < LIMIT - 1) return
+        if (mutableStateFlow.value.product.products.isNotEmpty()
+            && mutableStateFlow.value.product.products.size < LIMIT - 1)
+            return
         skip = if (isRefresh) {
             0
         } else {
@@ -30,7 +31,9 @@ class ProductInteractor
         mutableStateFlow.update { state ->
             if (skip >= LIMIT) {
                 val product = state.product.copy(
-                    products = state.product.products.toMutableList() + listOf(ProductUI.Loading("TitleForLoading".random() + state.product.products.random().title))
+                    products = state.product.products.toMutableList()
+                            + listOf(ProductUI.Loading("TitleForLoading".random()
+                            + state.product.products.random().title))
                 )
                 state.copy(
                     listState = ListState.PAGINATING, product = product, errorMessage = ""

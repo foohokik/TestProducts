@@ -72,8 +72,6 @@ fun ProductsView(
         }
     }
 
-
-
     LaunchedEffect(reachedBottom) {
         if (reachedBottom) {
             viewModel.getProducts()
@@ -84,9 +82,9 @@ fun ProductsView(
         SearchInputField(
             searchText = viewModel.searchText,
             isSearching = state.isSearching,
-            onQueryChange = { viewModel.onSearchTextChange(it) },
-            onStartSearch = { viewModel.onSearch() },
-            onClearSearch = { viewModel.onClearSearch() }
+            onQueryChange =  viewModel::onSearchTextChange ,
+            onStartSearch =  viewModel::onSearch,
+            onClearSearch =  viewModel::onClearSearch
         )
 
         if (state.errorMessage.isNotEmpty()) {
@@ -188,7 +186,7 @@ fun ProductsItems(
                             modifier = Modifier.padding(10.dp)
                         )
                     }
-                }
+                   }
             }
         }
     }
